@@ -1,0 +1,28 @@
+name: prospection-icam-voile
+
+on:
+  schedule:
+    - cron: "5 * * * *"      # toutes les heures, chaque run dure ~52 min : quasi 24/7
+  workflow_dispatch:          # bouton "Run workflow" pour lancer à la main
+
+concurrency:
+  group: prospection
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 58
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python main.py
+        env:
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+          GROQ_KEY: ${{ secrets.GROQ_KEY }}
+          GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
+          BUDGET_MIN: "52"
+          GUESS_GENERIC: "0"   # "1" = ajoute contact@domaine quand aucun email n'est publié (plus de volume, plus de rebonds)
