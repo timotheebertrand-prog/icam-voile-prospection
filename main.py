@@ -35,7 +35,7 @@ GROQ_KEY = os.environ.get("GROQ_KEY", "")
 SA_INFO = json.loads(os.environ["GOOGLE_SA_JSON"])
 BUDGET_S = int(os.environ.get("BUDGET_MIN", "52")) * 60
 GUESS_GENERIC = os.environ.get("GUESS_GENERIC", "0") == "1"  # contact@domaine si rien trouvé (risque de rebond)
-GROQ_MODEL = "mixtral-8x7b-32768"
+GROQ_MODEL = "llama3-70b-8192"
 
 MAX_PER_COMPANY = 5
 WORKERS = 16
